@@ -14,4 +14,4 @@ def run_rag(llm, retriever, prompt, query):
         "query": query
     })
 
-    return result["answer"]
+    return result["answer"] 

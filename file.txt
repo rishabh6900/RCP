@@ -1,5 +1,5 @@
-conda create --name RCP python=3.11 
-conda activate RCP
+conda create --name RagR python=3.11 
+conda activate RagR
 pip install -r requirements.txt
 streamlit run app.py
 python -m streamlit run app.py 

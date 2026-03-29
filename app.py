@@ -8,7 +8,7 @@ from src.embeddings.embedder import get_embeddings
 from src.vectorstore.vectordb import create_vectorstore, load_vectorstore
 from src.chains.rag_chain import run_rag
 from src.prompts.prompts import planner_prompt
-from src.agents.intake_agent import intake_agent
+# from src.agents.intake_agent import intake_agent
 from src.agents.verifier_agent import verifier_agent
 
 from langchain_google_genai import ChatGoogleGenerativeAI
@@ -49,17 +49,14 @@ if query and "db" in st.session_state:
     with st.spinner("Thinking..."):
         retriever = st.session_state.db.as_retriever()
 
-        intake_qs = intake_agent(query)
-        if intake_qs:
-            st.warning("Need more info:")
-            for q in intake_qs:
-                st.write("-", q)
-        else:
-            result = run_rag(llm, retriever, planner_prompt, query)
-            verification = verifier_agent(query, result)
+        # Direct RAG (Planner handles everything now)
+        result = run_rag(llm, retriever, planner_prompt, query)
 
-            st.markdown("### Response")
-            st.write(result)
+        # Verification
+        verification = verifier_agent(query, result)
 
-            st.markdown("### Verification")
-            st.write(verification)
+        st.markdown("### Answer / Plan")
+        st.write(result)
+
+        st.markdown("### Verification")
+        st.write(verification)
